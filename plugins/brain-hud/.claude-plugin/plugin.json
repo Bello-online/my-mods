@@ -1,0 +1,13 @@
+{
+  "name": "brain-hud",
+  "version": "0.3.0",
+  "description": "A Jarvis-style Claude Brain pane: a 3D sphere and a vector HUD that shift colour, motion and overlay with what Claude is doing; a live draggable text sphere on terminals.",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "Olase Bello",
+    "url": "https://github.com/Bello-online"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Bello-online/my-mods/tree/main/plugins/brain-hud",
+  "repository": "https://github.com/Bello-online/my-mods"
+}

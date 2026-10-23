@@ -1,0 +1,19 @@
+{
+  "name": "my-mods",
+  "owner": {
+    "name": "Bello-online",
+    "url": "https://github.com/Bello-online"
+  },
+  "metadata": {
+    "description": "Olase's Claude Code mods: the Claude Brain pane and more."
+  },
+  "plugins": [
+    {
+      "name": "brain-hud",
+      "source": "./plugins/brain-hud",
+      "description": "Mod: a Jarvis-style Claude Brain pane \u2014 an interactive 3D sphere and a vector HUD that shift colour, motion and overlay with what Claude is doing.",
+      "version": "0.3.0",
+      "category": "mod"
+    }
+  ]
+}

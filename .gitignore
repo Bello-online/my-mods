@@ -1,0 +1,4 @@
+node_modules/
+# written by the engine beside a mod it loads; regenerated, never committed
+plugins/*/.claude-plugin/types/
+plugins/*/tsconfig.json
