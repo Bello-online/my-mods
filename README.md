@@ -1,6 +1,6 @@
 # my-mods
 
-Olase's Claude Code mods: changes to Claude's own interface, written as function-hooks plugins.
+Seni's Claude Code mods: changes to Claude's own interface, written as function-hooks plugins.
 
 ## brain-hud
 
