@@ -1,10 +1,10 @@
 {
   "name": "focus-band",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A slim focus band above the prompt: a pomodoro timer with focus and break rounds, plus this session's time, turns and tool calls.",
   "types": "./types/index.d.ts",
   "author": {
-    "name": "Olase Bello",
+    "name": "Olaseni Bello",
     "url": "https://github.com/Bello-online"
   },
   "license": "MIT",

@@ -5,21 +5,21 @@
     "url": "https://github.com/Bello-online"
   },
   "metadata": {
-    "description": "Olase's Claude Code mods: the Claude Brain pane and more."
+    "description": "Olaseni Bello's Claude Code mods: the Claude Brain pane and more."
   },
   "plugins": [
     {
       "name": "brain-hud",
       "source": "./plugins/brain-hud",
       "description": "Mod: a Jarvis-style Claude Brain pane \u2014 an interactive 3D sphere and a vector HUD that shift colour, motion and overlay with what Claude is doing.",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "category": "mod"
     },
     {
       "name": "focus-band",
       "source": "./plugins/focus-band",
       "description": "Mod: a slim focus band above the prompt with a pomodoro timer and this session's time, turns and tool calls.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "mod"
     }
   ]
