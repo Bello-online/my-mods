@@ -14,6 +14,13 @@
       "description": "Mod: a Jarvis-style Claude Brain pane \u2014 an interactive 3D sphere and a vector HUD that shift colour, motion and overlay with what Claude is doing.",
       "version": "0.3.0",
       "category": "mod"
+    },
+    {
+      "name": "focus-band",
+      "source": "./plugins/focus-band",
+      "description": "Mod: a slim focus band above the prompt with a pomodoro timer and this session's time, turns and tool calls.",
+      "version": "0.1.0",
+      "category": "mod"
     }
   ]
 }

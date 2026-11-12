@@ -39,6 +39,18 @@ claude plugin test plugins/brain-hud
 
 Source: `plugins/brain-hud/hooks` (the hooks module `register.tsx`, the vector views in `brain-svg.ts`, the terminal 3D client `brain3d.tsx`, the tool-to-phase map `phases.ts`). After a change, bump the version in `plugins/brain-hud/.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`, then update the marketplace and reinstall.
 
+## focus-band
+
+A slim focus band above the prompt: a pomodoro timer with focus and break rounds, plus this session's time, turns and tool calls.
+
+- Buttons to start or pause, reset and skip; hotkeys `s`, `r`, `n` while the band has focus.
+- A focus block rolls into a break with a toast; after the break the timer waits for you.
+- `/pomo` starts or pauses. `/pomo reset`, `/pomo skip` and `/pomo status` do what they say. `/pomo 50 10` sets the lengths and saves them for later sessions.
+
+```
+/plugin install focus-band@my-mods
+```
+
 ## License
 
 MIT
