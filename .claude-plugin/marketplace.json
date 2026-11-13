@@ -5,7 +5,7 @@
     "url": "https://github.com/Bello-online"
   },
   "metadata": {
-    "description": "Olaseni Bello's Claude Code mods: the Claude Brain pane and more."
+    "description": "Olaseni Bello's Claude Code mods: the Claude Brain pane, the focus band and the Clawd pane."
   },
   "plugins": [
     {
@@ -20,6 +20,13 @@
       "source": "./plugins/focus-band",
       "description": "Mod: a focus band above the prompt with a pomodoro timer, progress bar and session stats, and Clawd the Claude mascot hopping along now and then.",
       "version": "0.2.1",
+      "category": "mod"
+    },
+    {
+      "name": "clawd-buddy",
+      "source": "./plugins/clawd-buddy",
+      "description": "Mod: Clawd, the Claude Code mascot, in a side pane. He acts out what Claude is doing (thinking, reading, typing, running commands) with the turn's actions listed underneath.",
+      "version": "0.1.0",
       "category": "mod"
     }
   ]

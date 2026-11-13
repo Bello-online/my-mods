@@ -51,6 +51,18 @@ A focus band above the prompt: a pomodoro timer in a bordered card with a progre
 /plugin install focus-band@my-mods
 ```
 
+## clawd-buddy
+
+Clawd, the Claude Code mascot, in a pane beside the chat. He acts out what Claude is doing, with the turn's actions listed underneath him.
+
+- Thirteen animated scenes: a thought bubble while thinking, a keyboard while writing the answer, a book while reading, a pencil while editing, a terminal while a command runs, a magnifying glass while searching, and more.
+- Under Clawd: a headline of what is happening, then each tool call of the turn with a mark for running, done or failed and how long it took.
+- Opens by itself on the desktop app and in the editor. On a terminal, `/clawd` opens it.
+
+```
+/plugin install clawd-buddy@my-mods
+```
+
 ## License
 
 MIT

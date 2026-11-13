@@ -1,0 +1,13 @@
+{
+  "name": "clawd-buddy",
+  "version": "0.1.0",
+  "description": "Clawd, the Claude Code mascot, in a side pane: he acts out what Claude is doing (thinking, reading, typing, running commands) with the turn's actions listed underneath.",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "Olaseni Bello",
+    "url": "https://github.com/Bello-online"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Bello-online/my-mods/tree/main/plugins/clawd-buddy",
+  "repository": "https://github.com/Bello-online/my-mods"
+}
