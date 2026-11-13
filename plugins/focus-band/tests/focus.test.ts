@@ -58,7 +58,7 @@ for (const surface of ['terminal', 'desktop'] as const) {
       const ui = await $.ui.mount({ ...BAND, surface })
 
       expect(await bandText(ui, /25:00/)).toBeDefined()
-      expect(await bandText(ui, /focus ready/)).toBeDefined()
+      expect(await bandText(ui, /FOCUS · READY/)).toBeDefined()
 
       await ui.press({ key: 'toggle' })
       expect(await ui.find({ type: 'Button', text: /pause/ })).toBeDefined()
@@ -69,18 +69,22 @@ for (const surface of ['terminal', 'desktop'] as const) {
       await ui.press({ key: 'toggle' })
       await clock.advance(5 * MINUTE)
       expect(await bandText(ui, /24:00/)).toBeDefined()
-      expect(await bandText(ui, /paused/)).toBeDefined()
+      expect(await bandText(ui, /PAUSED/)).toBeDefined()
 
       // resume and run out the block: it rolls into a running break
       await ui.press({ key: 'toggle' })
       await clock.advance(24 * MINUTE + 1000)
-      expect(await bandText(ui, /break/)).toBeDefined()
-      expect(await bandText(ui, /🍅/)).toBeDefined()
+      expect(await bandText(ui, /BREAK/)).toBeDefined()
+      if (surface === 'terminal') {
+        expect(await bandText(ui, /🍅/)).toBeDefined()
+      } else {
+        expect(String((await ui.find({ type: 'Svg' }))?.props.alt)).toContain('1 round done')
+      }
       expect(toasts.some(t => /Focus round 1 done/.test(t))).toBe(true)
 
       // the break ends and the timer waits on a fresh focus block
       await clock.advance(5 * MINUTE + 1000)
-      expect(await bandText(ui, /focus ready/)).toBeDefined()
+      expect(await bandText(ui, /FOCUS · READY/)).toBeDefined()
       expect(await bandText(ui, /25:00/)).toBeDefined()
       expect(toasts.some(t => /Break over/.test(t))).toBe(true)
       await ui.unmount()
@@ -91,16 +95,17 @@ for (const surface of ['terminal', 'desktop'] as const) {
       await $.session.start({ cwd: '/', surface, isInteractive: true })
       const ui = await $.ui.mount({ ...BAND, surface })
 
-      await $.tool.call({ tool: 'Bash', command: 'ls' })
-      await $.tool.call({ tool: 'Bash', command: 'pwd' })
+      const callTool = $.tool.call as unknown as (input: object) => Promise<unknown>
+      await callTool({ tool: 'Bash', command: 'ls' })
+      await callTool({ tool: 'Bash', command: 'pwd' })
       await $.turn.complete({ reason: 'answer', answer: 'done', durationMs: 1200, isAborted: false, turnId: 't1' })
-      expect(await bandText(ui, /1 turn · 2 tool calls/)).toBeDefined()
+      expect(await bandText(ui, /1 turn.*2 tool calls/)).toBeDefined()
 
       await ui.press({ key: 'skip' })
-      expect(await bandText(ui, /break ready/)).toBeDefined()
+      expect(await bandText(ui, /BREAK · READY/)).toBeDefined()
       expect(await bandText(ui, /05:00/)).toBeDefined()
       await ui.press({ key: 'reset' })
-      expect(await bandText(ui, /focus ready/)).toBeDefined()
+      expect(await bandText(ui, /FOCUS · READY/)).toBeDefined()
       await ui.unmount()
     })
   })
@@ -112,12 +117,12 @@ describe('/pomo', () => {
     stubs(on, store)
     await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
 
-    const set = await $.command.run({ command: 'pomo', args: '50 10' })
+    const set = await $.command.run({ command: 'pomo', args: '50 10' } as never)
     expect(JSON.stringify(set)).toContain('Focus 50 min, break 10 min')
-    const status = await $.command.run({ command: 'pomo', args: 'status' })
+    const status = await $.command.run({ command: 'pomo', args: 'status' } as never)
     expect(JSON.stringify(status)).toContain('50:00 left')
 
-    const bad = await $.command.run({ command: 'pomo', args: 'banana' })
+    const bad = await $.command.run({ command: 'pomo', args: 'banana' } as never)
     expect(JSON.stringify(bad)).toContain('Usage: /pomo')
   })
 
@@ -128,4 +133,72 @@ describe('/pomo', () => {
     expect(await bandText(ui, /45:00/)).toBeDefined()
     await ui.unmount()
   })
+})
+
+describe('Clawd', () => {
+  test('on the desktop the stage keeps its markup while the timer ticks, and naps on a break', async ($, on) => {
+    const { clock } = stubs(on)
+    await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
+    const ui = await $.ui.mount({ ...BAND, surface: 'desktop' })
+    const svg = async () => {
+      const el = await ui.find({ type: 'Svg' })
+      return { alt: String(el?.props.alt ?? ''), source: String(el?.props.source ?? '') }
+    }
+
+    expect((await svg()).alt).toContain('waits')
+    await ui.press({ key: 'toggle' })
+    const running = await svg()
+    expect(running.alt).toContain('hops')
+    expect(running.source).toContain('<animateTransform')
+    await clock.advance(3000)
+    expect(await bandText(ui, /24:57/)).toBeDefined()
+    // same markup each second, so the hop animation never restarts
+    expect((await svg()).source).toBe(running.source)
+
+    await ui.press({ key: 'skip' })
+    expect((await svg()).alt).toContain('naps')
+    expect((await svg()).source).toContain('>z<')
+    await ui.unmount()
+  })
+
+  test('on the terminal Clawd hops along a lane now and then', async ($, on) => {
+    const { clock } = stubs(on)
+    await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
+    const ui = await $.ui.mount({ ...BAND, surface: 'terminal', props: { ...BAND.props, maxRows: 10, bodyColumns: 100 } })
+    const lane = async () => (await bandText(ui, /▐▛███▜▌/)) ?? ''
+
+    const first = await lane()
+    expect(first).toContain('▐▛███▜▌')
+    await ui.press({ key: 'toggle' })
+
+    const seen = new Set<string>([first])
+    for (let i = 0; i < 12; i++) {
+      await clock.advance(5000)
+      seen.add(await lane())
+    }
+    expect(seen.size).toBeGreaterThan(1)
+    await ui.unmount()
+  })
+})
+
+describe('the buttons', () => {
+  for (const surface of ['terminal', 'desktop'] as const) {
+    test(`start/pause leads and the others stay quiet, on ${surface}`, async ($, on) => {
+      stubs(on)
+      await $.session.start({ cwd: '/', surface, isInteractive: true })
+      const ui = await $.ui.mount({ ...BAND, surface })
+
+      const start = await ui.find({ type: 'Button', text: /▶ start/ })
+      expect(start?.props.variant).toBe('primary')
+      const reset = await ui.find({ type: 'Button', text: /↺ reset/ })
+      expect(reset?.props.variant).toBe('secondary')
+      expect(reset?.props.dimColor).toBe(true)
+
+      await ui.press({ key: 'toggle' })
+      expect(await ui.find({ type: 'Button', text: /❚❚ pause/ })).toBeDefined()
+      await ui.press({ key: 'toggle' })
+      expect(await ui.find({ type: 'Button', text: /▶ resume/ })).toBeDefined()
+      await ui.unmount()
+    })
+  }
 })

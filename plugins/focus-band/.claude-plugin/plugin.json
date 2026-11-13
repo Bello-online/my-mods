@@ -1,7 +1,7 @@
 {
   "name": "focus-band",
-  "version": "0.1.1",
-  "description": "A slim focus band above the prompt: a pomodoro timer with focus and break rounds, plus this session's time, turns and tool calls.",
+  "version": "0.2.1",
+  "description": "A focus band above the prompt with Clawd the mascot hopping along: a pomodoro timer with focus and break rounds, plus this session's time, turns and tool calls.",
   "types": "./types/index.d.ts",
   "author": {
     "name": "Olaseni Bello",

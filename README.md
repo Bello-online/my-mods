@@ -41,7 +41,7 @@ Source: `plugins/brain-hud/hooks` (the hooks module `register.tsx`, the vector v
 
 ## focus-band
 
-A slim focus band above the prompt: a pomodoro timer with focus and break rounds, plus this session's time, turns and tool calls.
+A focus band above the prompt: a pomodoro timer in a bordered card with a progress bar and this session's time, turns and tool calls. Clawd, the Claude Code mascot, hops along it now and then during a focus block and naps through breaks.
 
 - Buttons to start or pause, reset and skip; hotkeys `s`, `r`, `n` while the band has focus.
 - A focus block rolls into a break with a toast; after the break the timer waits for you.

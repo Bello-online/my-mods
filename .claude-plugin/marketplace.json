@@ -18,8 +18,8 @@
     {
       "name": "focus-band",
       "source": "./plugins/focus-band",
-      "description": "Mod: a slim focus band above the prompt with a pomodoro timer and this session's time, turns and tool calls.",
-      "version": "0.1.1",
+      "description": "Mod: a focus band above the prompt with a pomodoro timer, progress bar and session stats, and Clawd the Claude mascot hopping along now and then.",
+      "version": "0.2.1",
       "category": "mod"
     }
   ]

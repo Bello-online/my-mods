@@ -21,12 +21,19 @@ export type FocusCounts = {
   tools: number
 }
 
+/** Clawd's place in the terminal lane: a column, lifted one row mid-hop. */
+export type FocusMascot = {
+  x: number
+  lift: number
+}
+
 declare module 'claude-code' {
   interface PluginState {
     'focus-band': {
-      timer: FocusTimer
-      counts: FocusCounts
+      timer: Shaped<FocusTimer>
+      counts: Shaped<FocusCounts>
       now: number
+      mascot: Shaped<FocusMascot>
     }
   }
 }
