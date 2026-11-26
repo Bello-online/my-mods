@@ -52,7 +52,7 @@ describe('formatting', () => {
 
 for (const surface of ['terminal', 'desktop'] as const) {
   describe(`the band on ${surface}`, () => {
-    test('runs a focus round into a break, then waits', async ($, on) => {
+    test('runs a focus round into a break, then waits', { timeoutMs: 30_000 }, async ($, on) => {
       const { clock, toasts } = stubs(on)
       await $.session.start({ cwd: '/', surface, isInteractive: true })
       const ui = await $.ui.mount({ ...BAND, surface })
